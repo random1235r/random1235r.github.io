@@ -14,13 +14,14 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
             position: relative;
         }
         /* Canvas styles for the background wave effect */
         #waveCanvas {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -35,6 +36,10 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            padding: 40px 20px;
+            width: 100%;
+            max-width: 900px;
+            box-sizing: border-box;
         }
         .typing-text {
             font-size: 3rem;
@@ -86,6 +91,7 @@
             height: 45px;
             transition: all 0.3s ease;
             text-decoration: none;
+            cursor: pointer;
         }
         .icon-link svg {
             width: 100%;
@@ -114,6 +120,87 @@
             font-family: monospace;
             color: #7289da;
             letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        /* --- New Games Grid Styles --- */
+        .games-section {
+            width: 100%;
+            margin-top: 40px;
+            display: none;
+            flex-direction: column;
+            gap: 25px;
+            opacity: 0;
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            transform: translateY(20px);
+        }
+        .games-section.show {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .featured-games {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            width: 100%;
+        }
+        .featured-card {
+            background: linear-gradient(135deg, #1e2029 0%, #13151c 100%);
+            border: 2px solid #7289da;
+            border-radius: 12px;
+            height: 160px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        .featured-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(114, 137, 218, 0.4);
+            border-color: #ff4757;
+        }
+        .featured-card h3 {
+            margin: 0;
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+        .featured-card span {
+            font-size: 0.9rem;
+            color: #ff4757;
+            text-transform: uppercase;
+            margin-top: 5px;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+        .regular-games {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
+            width: 100%;
+        }
+        .game-square {
+            background-color: #161821;
+            border: 1px solid #2f313d;
+            aspect-ratio: 1 / 1;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 600;
+            color: #8a8f98;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .game-square:hover {
+            background-color: #1e202e;
+            border-color: #7289da;
+            color: #ffffff;
+            transform: scale(1.05);
         }
 
         @keyframes typing {
@@ -137,7 +224,8 @@
         <button class="enter-btn" id="enterBtn">ENTER SITE</button>
         
         <div class="icon-row" id="mainIcons">
-            <a href="https://google.com" class="icon-link games" id="gameLink" title="Games">
+            <!-- Changed href to javascript:void(0) to act as a toggle button -->
+            <a href="javascript:void(0)" class="icon-link games" id="gameLink" title="Games">
                 <svg viewBox="0 0 640 512"><path d="M192 64C86 64 0 150 0 256S86 448 192 448H448c106 0 192-86 192-192s-86-192-192-192H192zM496 168a40 40 0 1 1 0 80 40 40 0 1 1 0-80zM392 272a40 40 0 1 1 80 0 40 40 0 1 1 -80 0zm128 40a40 40 0 1 1 0 80 40 40 0 1 1 0-80zM120 256c0-13.3 10.7-24 24-24h24V208c0-13.3 10.7-24 24-24s24 10.7 24 24v24h24c13.3 0 24 10.7 24 24s-10.7 24-24 24H216v24c0 13.3-10.7 24-24 24s-24-10.7-24-24V280H144c-13.3 0-24-10.7-24-24z"/></svg>
             </a>
             <a href="https://google.com" class="icon-link apps" id="appLink" title="Apps">
@@ -148,85 +236,31 @@
             </a>
         </div>
         <div class="clock" id="liveClock">00:00:00 PM</div>
+
+        <!-- --- Game Content Section --- -->
+        <div class="games-section" id="gamesSection">
+            <div class="featured-games">
+                <div class="featured-card">
+                    <h3>UNDERTALE</h3>
+                    <span>Featured</span>
+                </div>
+                <div class="featured-card">
+                    <h3>DELTARUNE</h3>
+                    <span>Featured</span>
+                </div>
+            </div>
+            <div class="regular-games">
+                <div class="game-square">Game 1</div>
+                <div class="game-square">Game 2</div>
+                <div class="game-square">Game 3</div>
+                <div class="game-square">Game 4</div>
+                <div class="game-square">Game 5</div>
+                <div class="game-square">Game 6</div>
+            </div>
+        </div>
     </div>
 
     <script>
-        // --- 1. SITE INITIALIZATION CONTROLS ---
+        // --- 1. SITE INITIALIZATION & TOGGLE CONTROLS ---
         const enterBtn = document.getElementById('enterBtn');
         const mainIcons = document.getElementById('mainIcons');
-
-        enterBtn.addEventListener('click', () => {
-            enterBtn.style.display = 'none';
-            mainIcons.style.display = 'flex';
-            setTimeout(() => {
-                mainIcons.style.opacity = '1';
-            }, 50);
-        });
-
-        // --- 2. LIVE CLOCK COMPONENT ---
-        function updateClock() {
-            const now = new Date();
-            let hours = now.getHours();
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            const ampm = hours >= 12 ? 'PM' : 'AM';
-            
-            hours = hours % 12;
-            hours = hours ? hours : 12; // Converts 0 to 12 hour standard
-            const formattedHours = String(hours).padStart(2, '0');
-            
-            document.getElementById('liveClock').textContent = `${formattedHours}:${minutes}:${seconds} ${ampm}`;
-        }
-        
-        // Start the timer loop immediately
-        setInterval(updateClock, 1000);
-        updateClock(); 
-
-        // --- 3. MOUSE WAVE RIPPLE EFFECT CANVAS ---
-        const canvas = document.getElementById('waveCanvas');
-        const ctx = canvas.getContext('2d');
-        let ripples = [];
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        window.addEventListener('mousemove', (e) => {
-            ripples.push({
-                x: e.clientX,
-                y: e.clientY,
-                radius: 2,
-                maxRadius: 80,
-                opacity: 1,
-                speed: 2.5 
-            });
-        });
-
-        function animateWaves() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            for (let i = ripples.length - 1; i >= 0; i--) {
-                let r = ripples[i];
-                r.radius += r.speed;
-                r.opacity = 1 - (r.radius / r.maxRadius);
-                
-                if (r.opacity <= 0) {
-                    ripples.splice(i, 1);
-                    continue;
-                }
-                
-                ctx.beginPath();
-                ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
-                ctx.strokeStyle = `rgba(114, 137, 218, ${r.opacity * 0.4})`; 
-                ctx.lineWidth = 2;
-                ctx.stroke();
-            }
-            requestAnimationFrame(animateWaves);
-        }
-        animateWaves();
-    </script>
-</body>
-</html>
