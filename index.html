@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proxy Intro</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0d0e12;
+            color: #ffffff;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            z-index: 2;
+        }
+
+        .typing-text {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            border-right: 4px solid #7289da;
+            white-space: nowrap;
+            overflow: hidden;
+            margin-bottom: 10px;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+
+        .subtext {
+            font-size: 1.2rem;
+            color: #8a8f98;
+            margin-bottom: 40px;
+        }
+
+        .enter-btn {
+            background-color: #7289da;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(114, 137, 218, 0.4);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .enter-btn:hover {
+            background-color: #5b73c7;
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(114, 137, 218, 0.8);
+        }
+
+        .clock {
+            margin-top: 50px;
+            font-size: 1rem;
+            color: #4f545c;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #7289da; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="typing-text">RANDOMS</div>
+        <div class="subtext">Secure. Fast. Unrestricted.</div>
+        
+        <!-- Redirects smoothly to your Google Site home page after engaging fullscreen -->
+        <a href="https://google.com" 
+           class="enter-btn" 
+           id="enterBtn">ENTER SITE</a>
+        
+        <div class="clock" id="liveClock">00:00:00 PM</div>
+    </div>
+
+    <script>
+        // Real-time clock logic
+        function updateClock() {
+            const now = new Date();
+            let timeString = now.toLocaleTimeString();
+            document.getElementById('liveClock').textContent = timeString;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Native Fullscreen & Redirect Logic
+        document.getElementById('enterBtn').addEventListener('click', function(e) {
+            e.preventDefault(); // Pause the link navigation for a split second
+            var targetUrl = this.getAttribute('href');
+            var docElm = document.documentElement;
+
+            // Trigger true browser fullscreen mode
+            if (docElm.requestFullscreen) {
+                docElm.requestFullscreen();
+            } else if (docElm.webkitRequestFullscreen) { /* Safari */
+                docElm.webkitRequestFullscreen();
+            } else if (docElm.msRequestFullscreen) { /* IE11 */
+                docElm.msRequestFullscreen();
+            }
+
+            // Instantly send the user to your main layout inside the fullscreen view
+            setTimeout(function() {
+                window.location.href = targetUrl;
+            }, 100); 
+        });
+    </script>
+
+</body>
+</html>
