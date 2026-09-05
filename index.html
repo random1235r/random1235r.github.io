@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proxy Intro</title>
-    <!-- Importing Font Awesome for clean, high-quality vector icons -->
-    <link rel="stylesheet" href="https://cloudflare.com">
     <style>
         body {
             margin: 0;
@@ -63,39 +61,52 @@
             box-shadow: 0 0 25px rgba(114, 137, 218, 0.8);
         }
 
-        /* Styling for the icon shortcut container */
+        /* Hide the icons by default when loading the page */
         .icon-row {
             margin-top: 40px;
-            display: flex;
+            display: none; 
             justify-content: center;
-            gap: 25px;
+            gap: 30px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
         }
 
+        /* Styling for the SVG vector paths */
         .icon-link {
-            color: #8a8f98;
-            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
             transition: all 0.3s ease;
             text-decoration: none;
         }
 
-        /* Smooth hover animations for each custom category badge */
+        .icon-link svg {
+            width: 100%;
+            height: 100%;
+            fill: #8a8f98;
+            transition: fill 0.3s ease, filter 0.3s ease;
+        }
+
+        /* Hover animations and glowing neon effects for raw SVGs */
         .icon-link:hover {
             transform: scale(1.2);
         }
 
-        .icon-link.games:hover {
-            color: #ff4757;
-            text-shadow: 0 0 15px rgba(255, 71, 87, 0.6);
+        .icon-link.games:hover svg {
+            fill: #ff4757;
+            filter: drop-shadow(0 0 8px rgba(255, 71, 87, 0.8));
         }
 
-        .icon-link.apps:hover {
-            color: #2ed573;
-            text-shadow: 0 0 15px rgba(46, 213, 115, 0.6);
+        .icon-link.apps:hover svg {
+            fill: #2ed573;
+            filter: drop-shadow(0 0 8px rgba(46, 213, 115, 0.8));
         }
 
-        .icon-link.discord:hover {
-            color: #5865F2;
-            text-shadow: 0 0 15px rgba(88, 101, 242, 0.6);
+        .icon-link.discord:hover svg {
+            fill: #5865F2;
+            filter: drop-shadow(0 0 8px rgba(88, 101, 242, 0.8));
         }
 
         .clock {
@@ -119,25 +130,24 @@
 
     <div class="container">
         <div class="typing-text">RANDOMS</div>
-        <div class="subtext">Secure. Fast. Unrestricted.</div>
+        <div class="subtext" id="siteSubtext">Secure. Fast. Unrestricted.</div>
         
-        <a href="https://google.com" 
-           class="enter-btn" 
-           id="enterBtn">ENTER SITE</a>
+        <!-- The introductory action button -->
+        <button class="enter-btn" id="enterBtn">ENTER SITE</button>
         
-        <!-- Navigation Quick-Links and Community Badges -->
-        <div class="icon-row">
-            <!-- Game Icon (Sends them straight to your site's home) -->
+        <!-- Navigation row loaded with built-in raw SVG shapes -->
+        <div class="icon-row" id="mainIcons">
+            <!-- Game Icon (Points straight to your site homepage layout) -->
             <a href="https://google.com" class="icon-link games" title="Games">
-                <i class="fa-solid fa-gamepad"></i>
+                <svg viewBox="0 0 640 512"><path d="M192 64C86 64 0 150 0 256S86 448 192 448H448c106 0 192-86 192-192s-86-192-192-192H192zM496 168a40 40 0 1 1 0 80 40 40 0 1 1 0-80zM392 272a40 40 0 1 1 80 0 40 40 0 1 1 -80 0zm128 40a40 40 0 1 1 0 80 40 40 0 1 1 0-80zM120 256c0-13.3 10.7-24 24-24h24V208c0-13.3 10.7-24 24-24s24 10.7 24 24v24h24c13.3 0 24 10.7 24 24s-10.7 24-24 24H216v24c0 13.3-10.7 24-24 24s-24-10.7-24-24V280H144c-13.3 0-24-10.7-24-24z"/></svg>
             </a>
-            <!-- App Icon (Sends them straight to your site's home) -->
+            <!-- App Icon -->
             <a href="https://google.com" class="icon-link apps" title="Apps">
-                <i class="fa-solid fa-cubes"></i>
+                <svg viewBox="0 0 512 512"><path d="M256 0c11.5 0 21.4 7.6 24.3 18.7l48 180H504c11.9 0 21.6 9.7 21.6 21.6c0 5.4-2 10.6-5.7 14.6l-144 156 48 180c3 11.2-3.6 22.9-14.8 25.9c-5.4 1.4-11.2 .5-16-2.5L256 500l-137.4 92.4c-9.9 6.7-23.4 3.9-30-6c-3-4.5-4-9.9-2.7-15.2l48-180L10.1 235c-8.8-9.5-8.1-24.3 1.4-33.1c4-3.7 9.3-5.7 14.8-5.7H183.7l48-180C234.6 7.6 244.5 0 256 0z"/></svg>
             </a>
-            <!-- Discord Icon (Now linked to your live community invite!) -->
-            <a href="https://discord.gg/mw2Ft4mbfs" target="_blank" class="icon-link discord" title="Join Discord">
-                <i class="fa-brands fa-discord"></i>
+            <!-- Discord Icon -->
+            <a href="https://discord.gg" target="_blank" class="icon-link discord" title="Join Discord">
+                <svg viewBox="0 0 640 512"><path d="M524.5 69.8a509.3 509.3 0 0 0 -125.7-39c-5.3 9.4-11.2 24.2-15.4 34.3a470.7 470.7 0 0 0 -172.8 0c-4.2-10.1-10.2-24.9-15.5-34.3A509.3 509.3 0 0 0 69.5 70C1.6 171.2-16.1 269.8 13.2 367a517.9 517.9 0 0 0 156.4 79.1c37.3-50.9 69.6-106.7 95.8-166.4a371.4 371.4 0 0 1 -151.3-73c10-7.3 19.8-15 29.2-23c306 141.2 541 141.2 543.1 141.2c9.4 7.9 19.2 15.6 29.2 23a371.1 371.1 0 0 1 -151.3 73c26.2 59.7 58.5 115.4 95.8 166.4a517.9 517.9 0 0 0 156.4-79.1c33.9-107.5 14.8-204.8-49.8-297.2zM215.8 304.4c-30.3 0-55.3-27.7-55.3-61.6s24.4-61.6 55.3-61.6s55.6 27.8 55.3 61.6c0 33.8-24.7 61.6-55.3 61.6zm210.6 0c-30.3 0-55.3-27.7-55.3-61.6s24.4-61.6 55.3-61.6s55.6 27.8 55.3 61.6c0 33.8-24.7 61.6-55.3 61.6z"/></svg>
             </a>
         </div>
         
@@ -145,6 +155,7 @@
     </div>
 
     <script>
+        // System Clock Logic
         function updateClock() {
             const now = new Date();
             let timeString = now.toLocaleTimeString();
@@ -153,11 +164,11 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-        document.getElementById('enterBtn').addEventListener('click', function(e) {
-            e.preventDefault(); 
-            var targetUrl = this.getAttribute('href');
+        // Reveal Icons on Click with Fullscreen Trigger
+        document.getElementById('enterBtn').addEventListener('click', function() {
             var docElm = document.documentElement;
 
+            // Trigger full-screen presentation mode
             if (docElm.requestFullscreen) {
                 docElm.requestFullscreen();
             } else if (docElm.webkitRequestFullscreen) { 
@@ -166,9 +177,18 @@
                 docElm.msRequestFullscreen();
             }
 
+            // Hide the enter button out of sight completely
+            this.style.display = 'none';
+
+            // Swap out the subtitle text descriptor dynamically
+            document.getElementById('siteSubtext').textContent = "Choose your destination below:";
+
+            // Display and smoothly fade in the new custom navigation shortcuts
+            var iconContainer = document.getElementById('mainIcons');
+            iconContainer.style.display = 'flex';
             setTimeout(function() {
-                window.location.href = targetUrl;
-            }, 100); 
+                iconContainer.style.opacity = '1';
+            }, 50);
         });
     </script>
 
