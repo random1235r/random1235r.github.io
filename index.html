@@ -114,43 +114,6 @@
             color: #4f545c;
         }
 
-        /* --- Undertale Flowey Dialogue Section --- */
-        .flowey-box {
-            position: fixed;
-            bottom: 25px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 600px;
-            max-width: 90%;
-            background-color: #000000;
-            border: 4px solid #ffffff;
-            padding: 15px;
-            display: none; /* Hidden until site opens */
-            align-items: center;
-            gap: 20px;
-            z-index: 10;
-            box-sizing: border-box;
-        }
-        .flowey-sprite-container {
-            width: 80px;
-            height: 80px;
-            flex-shrink: 0;
-        }
-        /* Expressions managed via toggling active classes */
-        .flowey-face-evil, .flowey-face-normal { display: none; }
-        .flowey-box.normal-mode .flowey-face-normal { display: block; }
-        .flowey-box.evil-mode .flowey-face-evil { display: block; }
-
-        .flowey-dialogue {
-            color: #ffffff;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 1.1rem;
-            font-weight: bold;
-            text-align: left;
-            line-height: 1.4;
-            letter-spacing: 0.5px;
-        }
-
         @keyframes typing {
             from { width: 0 }
             to { width: 100% }
@@ -185,46 +148,88 @@
         <div class="clock" id="liveClock">00:00:00 PM</div>
     </div>
 
-    <!-- Interactive Undertale Dialogue Box Component -->
-    <div class="flowey-box normal-mode" id="floweyContainer">
-        <div class="flowey-sprite-container">
-            <!-- Normal, smiling Flowey Vector -->
-            <svg class="flowey-face-normal" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="16" fill="#f1c40f"/>
-                <!-- Petals -->
-                <ellipse cx="50" cy="18" rx="10" ry="16" fill="#ffffff"/>
-                <ellipse cx="50" cy="82" rx="10" ry="16" fill="#ffffff"/>
-                <ellipse cx="18" cy="50" rx="16" ry="10" fill="#ffffff"/>
-                <ellipse cx="82" cy="50" rx="16" ry="10" fill="#ffffff"/>
-                <ellipse cx="28" cy="28" rx="12" ry="12" fill="#ffffff"/>
-                <ellipse cx="72" cy="28" rx="12" ry="12" fill="#ffffff"/>
-                <ellipse cx="28" cy="72" rx="12" ry="12" fill="#ffffff"/>
-                <ellipse cx="72" cy="72" rx="12" ry="12" fill="#ffffff"/>
-                <!-- Center face element -->
-                <circle cx="50" cy="50" r="16" fill="#f1c40f"/>
-                <!-- Happy Eyes -->
-                <circle cx="44" cy="46" r="3" fill="#000"/>
-                <circle cx="56" cy="46" r="3" fill="#000"/>
-                <!-- Happy Smile -->
-                <path d="M 42 54 Q 50 62 58 54" stroke="#000" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-            </svg>
+    <script>
+        // --- 1. SITE INITIALIZATION CONTROLS ---
+        const enterBtn = document.getElementById('enterBtn');
+        const mainIcons = document.getElementById('mainIcons');
 
-            <!-- Evil, wide-eyed grin Flowey Vector -->
-            <svg class="flowey-face-evil" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="16" fill="#f1c40f"/>
-                <!-- White Petals -->
-                <ellipse cx="50" cy="18" rx="10" ry="16" fill="#ffffff"/>
-                <ellipse cx="50" cy="82" rx="10" ry="16" fill="#ffffff"/>
-                <ellipse cx="18" cy="50" rx="16" ry="10" fill="#ffffff"/>
-                <ellipse cx="82" cy="50" rx="16" ry="10" fill="#ffffff"/>
-                <ellipse cx="28" cy="28" rx="12" ry="12" fill="#ffffff"/>
-                <ellipse cx="72" cy="28" rx="12" ry="12" fill="#ffffff"/>
-                <ellipse cx="28" cy="72" rx="12" ry="12" fill="#ffffff"/>
-                <ellipse cx="72" cy="72" rx="12" ry="12" fill="#ffffff"/>
-                <circle cx="50" cy="50" r="16" fill="#f1c40f"/>
-                <!-- Creepy Black Eyes with tiny white dots -->
-                <circle cx="43" cy="45" r="5" fill="#000"/>
-                <circle cx="43" cy="45" r="1.5" fill="#fff"/>
-                <circle cx="57" cy="45" r="5" fill="#000"/>
-                <circle cx="57" cy="45" r="1.5" fill="#fff"/>
-                <!-- Creepy Grin showing sharper contours -->
+        enterBtn.addEventListener('click', () => {
+            // Hide the enter button
+            enterBtn.style.display = 'none';
+            
+            // Reveal and smoothly fade in the icon row
+            mainIcons.style.display = 'flex';
+            setTimeout(() => {
+                mainIcons.style.opacity = '1';
+            }, 50);
+        });
+
+        // --- 2. LIVE CLOCK COMPONENT ---
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            
+            hours = hours % 12;
+            hours = hours ? hours : 12; // Converts 0 to 12 hour standard
+            const formattedHours = String(hours).padStart(2, '0');
+            
+            document.getElementById('liveClock').textContent = `${formattedHours}:${minutes}:${seconds} ${ampm}`;
+        }
+        
+        setInterval(updateClock, 1000);
+        updateClock(); // Initialize immediately
+
+        // --- 3. MOUSE WAVE RIPPLE EFFECT CANVAS ---
+        const canvas = document.getElementById('waveCanvas');
+        const ctx = canvas.getContext('2d');
+        let ripples = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // Register custom mouse tracking wave emitters
+        window.addEventListener('mousemove', (e) => {
+            ripples.push({
+                x: e.clientX,
+                y: e.clientY,
+                radius: 2,
+                maxRadius: 80, // How far the ring expands
+                opacity: 1,
+                speed: 2.5 // Expansion velocity
+            });
+        });
+
+        function animateWaves() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            for (let i = ripples.length - 1; i >= 0; i--) {
+                let r = ripples[i];
+                r.radius += r.speed;
+                r.opacity = 1 - (r.radius / r.maxRadius);
+                
+                // Clear out expired ripple tracks
+                if (r.opacity <= 0) {
+                    ripples.splice(i, 1);
+                    continue;
+                }
+                
+                // Draw wave ring geometries matching the theme hue
+                ctx.beginPath();
+                ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
+                ctx.strokeStyle = `rgba(114, 137, 218, ${r.opacity * 0.4})`; 
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
+            requestAnimationFrame(animateWaves);
+        }
+        animateWaves();
+    </script>
+</body>
+</html>
