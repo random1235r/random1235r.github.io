@@ -110,8 +110,10 @@
         }
         .clock {
             margin-top: 30px;
-            font-size: 1rem;
-            color: #4f545c;
+            font-size: 1.2rem;
+            font-family: monospace;
+            color: #7289da;
+            letter-spacing: 1px;
         }
 
         @keyframes typing {
@@ -154,10 +156,7 @@
         const mainIcons = document.getElementById('mainIcons');
 
         enterBtn.addEventListener('click', () => {
-            // Hide the enter button
             enterBtn.style.display = 'none';
-            
-            // Reveal and smoothly fade in the icon row
             mainIcons.style.display = 'flex';
             setTimeout(() => {
                 mainIcons.style.opacity = '1';
@@ -179,8 +178,9 @@
             document.getElementById('liveClock').textContent = `${formattedHours}:${minutes}:${seconds} ${ampm}`;
         }
         
+        // Start the timer loop immediately
         setInterval(updateClock, 1000);
-        updateClock(); // Initialize immediately
+        updateClock(); 
 
         // --- 3. MOUSE WAVE RIPPLE EFFECT CANVAS ---
         const canvas = document.getElementById('waveCanvas');
@@ -194,15 +194,14 @@
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        // Register custom mouse tracking wave emitters
         window.addEventListener('mousemove', (e) => {
             ripples.push({
                 x: e.clientX,
                 y: e.clientY,
                 radius: 2,
-                maxRadius: 80, // How far the ring expands
+                maxRadius: 80,
                 opacity: 1,
-                speed: 2.5 // Expansion velocity
+                speed: 2.5 
             });
         });
 
@@ -214,13 +213,11 @@
                 r.radius += r.speed;
                 r.opacity = 1 - (r.radius / r.maxRadius);
                 
-                // Clear out expired ripple tracks
                 if (r.opacity <= 0) {
                     ripples.splice(i, 1);
                     continue;
                 }
                 
-                // Draw wave ring geometries matching the theme hue
                 ctx.beginPath();
                 ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
                 ctx.strokeStyle = `rgba(114, 137, 218, ${r.opacity * 0.4})`; 
