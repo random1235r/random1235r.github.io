@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proxy Intro</title>
+    <!-- Importing Font Awesome for clean, high-quality vector icons -->
+    <link rel="stylesheet" href="https://cloudflare.com">
     <style>
         body {
             margin: 0;
@@ -61,8 +63,43 @@
             box-shadow: 0 0 25px rgba(114, 137, 218, 0.8);
         }
 
+        /* Styling for the new icon shortcut container */
+        .icon-row {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+        }
+
+        .icon-link {
+            color: #8a8f98;
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        /* Smooth hover animations for each custom category badge */
+        .icon-link:hover {
+            transform: scale(1.2);
+        }
+
+        .icon-link.games:hover {
+            color: #ff4757;
+            text-shadow: 0 0 15px rgba(255, 71, 87, 0.6);
+        }
+
+        .icon-link.apps:hover {
+            color: #2ed573;
+            text-shadow: 0 0 15px rgba(46, 213, 115, 0.6);
+        }
+
+        .icon-link.discord:hover {
+            color: #5865F2;
+            text-shadow: 0 0 15px rgba(88, 101, 242, 0.6);
+        }
+
         .clock {
-            margin-top: 50px;
+            margin-top: 30px;
             font-size: 1rem;
             color: #4f545c;
         }
@@ -84,16 +121,30 @@
         <div class="typing-text">RANDOMS</div>
         <div class="subtext">Secure. Fast. Unrestricted.</div>
         
-        <!-- Redirects smoothly to your Google Site home page after engaging fullscreen -->
         <a href="https://google.com" 
            class="enter-btn" 
            id="enterBtn">ENTER SITE</a>
+        
+        <!-- NEW: Dedicated Navigation Quick-Links and Community Badges -->
+        <div class="icon-row">
+            <!-- Game Icon (Sends them straight to your site's home or a game page) -->
+            <a href="https://google.com" class="icon-link games" title="Games">
+                <i class="fa-solid fa-gamepad"></i>
+            </a>
+            <!-- App Icon (Sends them to your main app section) -->
+            <a href="https://google.com" class="icon-link apps" title="Apps">
+                <i class="fa-solid fa-cubes"></i>
+            </a>
+            <!-- Discord Icon (Replace the # link with your live community invite link!) -->
+            <a href="#" target="_blank" class="icon-link discord" title="Join Discord">
+                <i class="fa-brands fa-discord"></i>
+            </a>
+        </div>
         
         <div class="clock" id="liveClock">00:00:00 PM</div>
     </div>
 
     <script>
-        // Real-time clock logic
         function updateClock() {
             const now = new Date();
             let timeString = now.toLocaleTimeString();
@@ -102,22 +153,19 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-        // Native Fullscreen & Redirect Logic
         document.getElementById('enterBtn').addEventListener('click', function(e) {
-            e.preventDefault(); // Pause the link navigation for a split second
+            e.preventDefault(); 
             var targetUrl = this.getAttribute('href');
             var docElm = document.documentElement;
 
-            // Trigger true browser fullscreen mode
             if (docElm.requestFullscreen) {
                 docElm.requestFullscreen();
-            } else if (docElm.webkitRequestFullscreen) { /* Safari */
+            } else if (docElm.webkitRequestFullscreen) { 
                 docElm.webkitRequestFullscreen();
-            } else if (docElm.msRequestFullscreen) { /* IE11 */
+            } else if (docElm.msRequestFullscreen) { 
                 docElm.msRequestFullscreen();
             }
 
-            // Instantly send the user to your main layout inside the fullscreen view
             setTimeout(function() {
                 window.location.href = targetUrl;
             }, 100); 
