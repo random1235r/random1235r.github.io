@@ -133,7 +133,7 @@
             margin: 0;
         }
 
-        /* Fullscreen Viewport Window */
+        /* Fullscreen Viewport Window (Kept for the unblocked games) */
         #viewer {
             display: none;
             position: fixed;
@@ -176,7 +176,7 @@
             width: 100%;
             flex-grow: 1;
             border: none;
-            background: #ffffff;
+            background: #000000;
         }
     </style>
 </head>
@@ -187,9 +187,9 @@
         <p>Secure Portal Network & Game Engine</p>
     </header>
 
-    <!-- NEW DESIGN: Central Proxy Search Engine Bar -->
+    <!-- Fixed Proxy Search Engine Bar -->
     <div class="search-section">
-        <h2>Stealth Proxy Browser</h2>
+        <h2>Stealth Web Browser</h2>
         <div class="proxy-input-wrapper">
             <input type="text" id="proxy-url" placeholder="Search the web or enter a URL..." onkeydown="if(event.key === 'Enter') launchProxy()">
             <button onclick="launchProxy()">Browse</button>
@@ -214,7 +214,7 @@
         </div>
     </div>
 
-    <!-- Hidden Viewport Player Frame -->
+    <!-- Hidden Viewport Player Frame for Games -->
     <div id="viewer">
         <div class="nav-bar">
             <h2 id="current-game-title">Proxy Terminal Loaded</h2>
@@ -224,7 +224,7 @@
     </div>
 
     <script>
-        // Main view engine launcher
+        // Main view engine launcher for unblocked games (they allow iframes)
         function playGame(url, title) {
             const viewer = document.getElementById('viewer');
             const frame = document.getElementById('game-frame');
@@ -235,31 +235,27 @@
             viewer.style.display = 'flex';
         }
 
-        // Smart Proxy Search Router
+        // Fixed Smart Router for general browsing
         function launchProxy() {
             let query = document.getElementById('proxy-url').value.trim();
             if (!query) return;
 
             let targetUrl = "";
-
-            // Check if user typed a regular domain name like google.com or https://site.com
             const isUrl = query.includes('.') && !query.includes(' ');
 
             if (isUrl) {
-                // If it's a direct website link, fix the prefix formatting
                 if (!query.startsWith('http://') && !query.startsWith('https://')) {
                     targetUrl = 'https://' + query;
                 } else {
                     targetUrl = query;
                 }
             } else {
-                // If they typed text keywords instead, send it straight to an embedded search engine page!
-                // DuckDuckGo is used here because it handles iframe nesting well.
-                targetUrl = 'https://duckduckgo.com' + encodeURIComponent(query);
+                // Uses a clean Google query fallback
+                targetUrl = 'https://google.com' + encodeURIComponent(query);
             }
 
-            // Launch the resulting string inside your viewer panel
-            playGame(targetUrl, "Proxy Frame: " + query);
+            // Fixed: Opens a fresh target window layout to bypass the frame error block
+            window.open(targetUrl, '_blank');
         }
 
         function closeGame() {
