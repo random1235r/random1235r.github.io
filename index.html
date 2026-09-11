@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Classroom Hub - Study Corner</title>
+    <title>RANDOMS Unblocked Games</title>
     <style>
         * {
             box-sizing: border-box;
@@ -12,52 +12,61 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         body {
-            background-color: #121212;
+            background-color: #0b0c10;
             color: #ffffff;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
         }
         header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-top: 20px;
+            margin-bottom: 40px;
         }
         h1 {
-            color: #00ff88;
-            font-size: 2.5rem;
-            text-shadow: 0 0 10px rgba(0,255,136,0.3);
+            color: #66fcf1;
+            font-size: 3rem;
+            text-shadow: 0 0 15px rgba(102,252,241,0.4);
+            letter-spacing: 2px;
         }
         p {
-            color: #aaaaaa;
-            margin-top: 5px;
+            color: #c5c6c7;
+            margin-top: 8px;
+            font-size: 1.1rem;
         }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
+        .container {
+            width: 100%;
+            max-width: 500px;
+            padding: 0 20px;
         }
-        .card {
-            background: #1e1e1e;
-            border: 2px solid #333;
-            border-radius: 12px;
-            padding: 20px;
+        .launch-card {
+            background: #1f2833;
+            border: 3px solid #45f248;
+            border-radius: 16px;
+            padding: 40px 20px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
         }
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: #00ff88;
-            box-shadow: 0 5px 15px rgba(0,255,136,0.2);
+        .launch-card:hover {
+            transform: translateY(-8px);
+            border-color: #66fcf1;
+            box-shadow: 0 10px 25px rgba(102,252,241,0.3);
         }
-        .card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 10px;
+        .launch-card h2 {
+            font-size: 2rem;
+            color: #ffffff;
+            margin-bottom: 12px;
         }
-        .card p {
-            font-size: 0.85rem;
+        .launch-card p {
+            color: #66fcf1;
+            font-size: 1rem;
+            font-weight: bold;
         }
-        /* Game Viewer Overlay */
+        /* Fullscreen Game Space Overlay */
         #viewer {
             display: none;
             position: fixed;
@@ -65,73 +74,64 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0,0,0,0.95);
+            background: #000000;
             z-index: 1000;
             flex-direction: column;
         }
         .nav-bar {
-            background: #1e1e1e;
-            padding: 15px;
+            background: #1f2833;
+            padding: 15px 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid #333;
+            border-bottom: 2px solid #45f248;
+        }
+        .nav-bar h2 {
+            font-size: 1.5rem;
+            color: #66fcf1;
         }
         .back-btn {
-            background: #ff3b30;
+            background: #ff4d4d;
             color: white;
             border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
+            padding: 10px 20px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
+            font-size: 1rem;
+            transition: background 0.2s;
         }
         .back-btn:hover {
-            background: #ff453a;
+            background: #ff1a1a;
         }
         iframe {
             width: 100%;
             flex-grow: 1;
             border: none;
-            background: white;
+            background: #000000;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Classroom Resource Center</h1>
-        <p>A simple dashboard for interactive break times.</p>
+        <h1>RANDOMS Unblocked Games</h1>
+        <p>Your clean, custom full-screen arcade platform.</p>
     </header>
 
-    <div class="grid">
-        <!-- Game 1 -->
-        <div class="card" onclick="playGame('https://github.io')">
-            <h3>2048</h3>
-            <p>Slide blocks and reach the legendary tile!</p>
-        </div>
-        <!-- Game 2 -->
-        <div class="card" onclick="playGame('https://github.io')">
-            <h3>Clumsy Bird</h3>
-            <p>A fun, open-source clone of Flappy Bird.</p>
-        </div>
-        <!-- Game 3 -->
-        <div class="card" onclick="playGame('https://hextris.io')">
-            <h3>Hextris</h3>
-            <p>Fast-paced puzzle dynamic inspired by Tetris.</p>
-        </div>
-        <!-- Game 4 -->
-        <div class="card" onclick="playGame('https://pacman.com')">
-            <h3>Pac-Man</h3>
-            <p>The iconic arcade maze puzzle game.</p>
+    <div class="container">
+        <!-- Main Game Panel Redirecting to your Target Link -->
+        <div class="launch-card" onclick="playGame('https://mollomm1.github.io/test/')">
+            <h2>Launch Main Game</h2>
+            <p>✦ CLICK TO PLAY FULLSCREEN ✦</p>
         </div>
     </div>
 
-    <!-- Hidden full-screen player -->
+    <!-- Full-screen Embedded iframe Window -->
     <div id="viewer">
         <div class="nav-bar">
-            <h2 id="game-title">Playing Game</h2>
-            <button class="back-btn" onclick="closeGame()">Back to Hub</button>
+            <h2>RANDOMS Arcade Space</h2>
+            <button class="back-btn" onclick="closeGame()">Close Hub</button>
         </div>
         <iframe id="game-frame" src=""></iframe>
     </div>
