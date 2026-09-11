@@ -3,136 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BULL-33 Portal Clone</title>
-    <!-- Tailwind CSS for sleek styling -->
-    <script src="https://tailwindcss.com"></script>
-    <!-- FontAwesome for shortcut icons -->
-    <link rel="stylesheet" href="https://cloudflare.com">
+    <title>Classroom Hub - Study Corner</title>
     <style>
-        body {
-            background-color: #0c0813;
-            /* Wavy cyberpunk vector texture */
-            background-image: radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.1) 0, transparent 50%), 
-                              radial-gradient(at 100% 100%, rgba(147, 51, 234, 0.15) 0, transparent 50%);
-            font-family: system-ui, -apple-system, sans-serif;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        .neon-glow {
-            text-shadow: 0 0 10px rgba(168, 85, 247, 0.6), 0 0 20px rgba(168, 85, 247, 0.4);
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h1 {
+            color: #00ff88;
+            font-size: 2.5rem;
+            text-shadow: 0 0 10px rgba(0,255,136,0.3);
+        }
+        p {
+            color: #aaaaaa;
+            margin-top: 5px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .card {
+            background: #1e1e1e;
+            border: 2px solid #333;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #00ff88;
+            box-shadow: 0 5px 15px rgba(0,255,136,0.2);
+        }
+        .card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+        }
+        .card p {
+            font-size: 0.85rem;
+        }
+        /* Game Viewer Overlay */
+        #viewer {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.95);
+            z-index: 1000;
+            flex-direction: column;
+        }
+        .nav-bar {
+            background: #1e1e1e;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #333;
+        }
+        .back-btn {
+            background: #ff3b30;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .back-btn:hover {
+            background: #ff453a;
+        }
+        iframe {
+            width: 100%;
+            flex-grow: 1;
+            border: none;
+            background: white;
         }
     </style>
 </head>
-<body class="min-h-screen text-slate-100 flex flex-col items-center justify-between p-6">
+<body>
 
-    <!-- Top Navigation Bar -->
-    <header class="w-full max-w-6xl flex justify-between items-center py-4 px-6 bg-slate-900/40 backdrop-blur-md border border-slate-800 rounded-2xl">
-        <div class="text-xl font-black tracking-widest text-purple-400 neon-glow">BULL-33</div>
-        <nav class="flex gap-6 text-sm font-medium text-slate-400">
-            <button onclick="switchTab('home')" class="hover:text-purple-400 transition cursor-pointer"><i class="fa-solid fa-house mr-1"></i> Home</button>
-            <button onclick="switchTab('games')" class="hover:text-purple-400 transition cursor-pointer"><i class="fa-solid fa-gamepad mr-1"></i> Games</button>
-            <button onclick="switchTab('settings')" class="hover:text-purple-400 transition cursor-pointer"><i class="fa-solid fa-gear mr-1"></i> Settings</button>
-        </nav>
+    <header>
+        <h1>Classroom Resource Center</h1>
+        <p>A simple dashboard for interactive break times.</p>
     </header>
 
-    <!-- Main Content Area Container -->
-    <main class="w-full max-w-4xl flex-1 flex flex-col items-center justify-center my-12">
-        
-        <!-- Tab 1: HOME PANEL -->
-        <div id="tab-home" class="w-full flex flex-col items-center gap-10">
-            <!-- Brand Logo Header -->
-            <h1 class="text-6xl font-black tracking-widest text-slate-100 uppercase neon-glow mb-4">
-                BULL<span class="text-purple-500">—</span>33
-            </h1>
-
-            <!-- Search / URL Form Section -->
-            <form onsubmit="handleProxySearch(event)" class="w-full max-w-2xl relative">
-                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </div>
-                <input type="text" id="proxy-url" placeholder="Enter a URL or search freely..." 
-                       class="w-full pl-12 pr-4 py-4 bg-slate-900/60 backdrop-blur-md border border-slate-800 focus:border-purple-500 rounded-2xl text-slate-200 placeholder-slate-500 outline-none transition shadow-2xl focus:shadow-purple-500/10">
-            </form>
-
-            <!-- Grid Dynamic Shortcuts Layout -->
-            <div class="w-full max-w-2xl">
-                <h3 class="text-xs uppercase tracking-wider text-slate-500 font-bold mb-4 flex items-center gap-2">
-                    <i class="fa-solid fa-link"></i> Shortcuts
-                </h3>
-                <div class="grid grid-cols-4 sm:grid-cols-6 gap-4">
-                    <!-- Shortcut Card -->
-                    <a href="https://tiktok.com" target="_blank" class="flex flex-col items-center gap-2 p-4 bg-slate-900/30 hover:bg-purple-950/20 border border-slate-800/60 hover:border-purple-500/40 rounded-xl transition group">
-                        <div class="w-12 h-12 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-content justify-center text-xl text-slate-300 group-hover:text-purple-400 transition">
-                            <i class="fa-brands fa-tiktok"></i>
-                        </div>
-                        <span class="text-xs text-slate-400 group-hover:text-slate-200 transition">TikTok</span>
-                    </a>
-                    <a href="https://www.youtube.com" target="_blank" class="flex flex-col items-center gap-2 p-4 bg-slate-900/30 hover:bg-purple-950/20 border border-slate-800/60 hover:border-purple-500/40 rounded-xl transition group">
-                        <div class="w-12 h-12 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-content justify-center text-xl text-slate-300 group-hover:text-red-400 transition">
-                            <i class="fa-brands fa-youtube"></i>
-                        </div>
-                        <span class="text-xs text-slate-400 group-hover:text-slate-200 transition">YouTube</span>
-                    </a>
-                    <a href="https://twitch.tv" target="_blank" class="flex flex-col items-center gap-2 p-4 bg-slate-900/30 hover:bg-purple-950/20 border border-slate-800/60 hover:border-purple-500/40 rounded-xl transition group">
-                        <div class="w-12 h-12 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-content justify-center text-xl text-slate-300 group-hover:text-purple-400 transition">
-                            <i class="fa-brands fa-twitch"></i>
-                        </div>
-                        <span class="text-xs text-slate-400 group-hover:text-slate-200 transition">Twitch</span>
-                    </a>
-                    <a href="https://spotify.com" target="_blank" class="flex flex-col items-center gap-2 p-4 bg-slate-900/30 hover:bg-purple-950/20 border border-slate-800/60 hover:border-purple-500/40 rounded-xl transition group">
-                        <div class="w-12 h-12 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-content justify-center text-xl text-slate-300 group-hover:text-green-400 transition">
-                            <i class="fa-brands fa-spotify"></i>
-                        </div>
-                        <span class="text-xs text-slate-400 group-hover:text-slate-200 transition">Spotify</span>
-                    </a>
-                    <a href="https://discord.com" target="_blank" class="flex flex-col items-center gap-2 p-4 bg-slate-900/30 hover:bg-purple-950/20 border border-slate-800/60 hover:border-purple-500/40 rounded-xl transition group">
-                        <div class="w-12 h-12 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-content justify-center text-xl text-slate-300 group-hover:text-indigo-400 transition">
-                            <i class="fa-brands fa-discord"></i>
-                        </div>
-                        <span class="text-xs text-slate-400 group-hover:text-slate-200 transition">Discord</span>
-                    </a>
-                    <!-- Custom Local Action Placeholder -->
-                    <button class="flex flex-col items-center gap-2 p-4 bg-slate-900/30 border border-dashed border-slate-800 hover:border-purple-500 rounded-xl transition group cursor-pointer">
-                        <div class="w-12 h-12 flex items-center justify-center text-xl text-slate-500 group-hover:text-purple-400 transition">
-                            <i class="fa-solid fa-plus"></i>
-                        </div>
-                        <span class="text-xs text-slate-500 group-hover:text-slate-300 transition">Add New</span>
-                    </button>
-                </div>
-            </div>
+    <div class="grid">
+        <!-- Game 1 -->
+        <div class="card" onclick="playGame('https://github.io')">
+            <h3>2048</h3>
+            <p>Slide blocks and reach the legendary tile!</p>
         </div>
-
-        <!-- Tab 2: GAMES PANEL -->
-        <div id="tab-games" class="w-full hidden flex flex-col gap-6">
-            <h2 class="text-3xl font-bold border-b border-slate-800 pb-2 text-purple-400">Arcade Games</h2>
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-6">
-                <!-- Game Card -->
-                <div class="bg-slate-900/50 border border-slate-800 rounded-2xl overflow-hidden hover:border-purple-500 transition group cursor-pointer" onclick="launchGame('https://pacman.com')">
-                    <div class="h-32 bg-slate-800 flex items-center justify-center relative">
-                        <i class="fa-solid fa-ghost text-4xl text-yellow-400 group-hover:scale-110 transition duration-300"></i>
-                    </div>
-                    <div class="p-3">
-                        <h4 class="font-bold text-sm text-slate-200 group-hover:text-purple-400 transition">Retro Arcade Game</h4>
-                        <p class="text-xs text-slate-500 mt-1">Click to launch emulated viewport</p>
-                    </div>
-                </div>
-            </div>
+        <!-- Game 2 -->
+        <div class="card" onclick="playGame('https://github.io')">
+            <h3>Clumsy Bird</h3>
+            <p>A fun, open-source clone of Flappy Bird.</p>
         </div>
-
-        <!-- Tab 3: SETTINGS PANEL -->
-        <div id="tab-settings" class="w-full hidden flex flex-col gap-6">
-            <h2 class="text-3xl font-bold border-b border-slate-800 pb-2 text-purple-400">Dashboard Configuration</h2>
-            <div class="bg-slate-900/40 p-6 rounded-2xl border border-slate-800 flex flex-col gap-4">
-                <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Proxy Engine Backend</label>
-                    <select class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-300 outline-none focus:border-purple-500">
-                        <option>Ultramarine App Routing Framework (Static/ServiceWorker)</option>
-                        <option>Corrosion Proxy Architecture Engine</option>
-                        <option>Dynamic Public Web Gateway</option>
-                    </select>
-                </div>
-                <p class="text-xs text-slate-500">Configure parameters to route sandboxed frame windows over custom hosting networks.</p>
-            </div>
+        <!-- Game 3 -->
+        <div class="card" onclick="playGame('https://hextris.io')">
+            <h3>Hextris</h3>
+            <p>Fast-paced puzzle dynamic inspired by Tetris.</p>
         </div>
+        <!-- Game 4 -->
+        <div class="card" onclick="playGame('https://pacman.com')">
+            <h3>Pac-Man</h3>
+            <p>The iconic arcade maze puzzle game.</p>
+        </div>
+    </div>
 
-    </main>
+    <!-- Hidden full-screen player -->
+    <div id="viewer">
+        <div class="nav-bar">
+            <h2 id="game-title">Playing Game</h2>
+            <button class="back-btn" onclick="closeGame()">Back to Hub</button>
+        </div>
+        <iframe id="game-frame" src=""></iframe>
+    </div>
 
-    <!-- Footer Network Information -->
+    <script>
+        function playGame(url) {
+            const viewer = document.getElementById('viewer');
+            const frame = document.getElementById('game-frame');
+            frame.src = url;
+            viewer.style.display = 'flex';
+        }
+
+        function closeGame() {
+            const viewer = document.getElementById('viewer');
+            const frame = document.getElementById('game-frame');
+            frame.src = '';
+            viewer.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
