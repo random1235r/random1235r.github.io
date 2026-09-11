@@ -12,7 +12,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         body {
-            background-color: #08090c;
+            background-color: #050508;
             color: #ffffff;
             padding: 20px;
             display: flex;
@@ -23,87 +23,54 @@
         }
         header {
             text-align: center;
-            margin-top: 30px;
+            margin-top: 40px;
             margin-bottom: 50px;
-            position: relative;
         }
         h1 {
             color: #00ffcc;
             font-size: 3.5rem;
-            text-shadow: 0 0 20px rgba(0, 255, 204, 0.6);
-            letter-spacing: 3px;
+            text-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+            letter-spacing: 4px;
             text-transform: uppercase;
         }
         p {
-            color: #8f94a0;
+            color: #64748b;
             margin-top: 10px;
             font-size: 1.1rem;
             letter-spacing: 1px;
         }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
+        
+        /* Main Proxy Search Bar Area */
+        .search-section {
             width: 100%;
-            max-width: 1100px;
-            padding: 20px;
+            max-width: 700px;
+            margin-bottom: 50px;
+            background: linear-gradient(145deg, #0f111a, #151926);
+            padding: 30px;
+            border-radius: 24px;
+            border: 2px solid #1e293b;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.7);
         }
-        .launch-card {
-            background: linear-gradient(145deg, #11141a, #1a1f29);
-            border: 2px solid #1f2633;
-            border-radius: 20px;
-            padding: 35px 25px;
+        .search-section h2 {
+            font-size: 1.4rem;
+            color: #00ffcc;
+            margin-bottom: 15px;
             text-align: center;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        /* Neon Glow Accents */
-        .launch-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: #45f248;
-            transition: background 0.3s;
-        }
-        .launch-card.proxy-card::before {
-            background: #00ffcc;
-        }
-        .launch-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0, 255, 204, 0.2);
-        }
-        .launch-card:hover::before {
-            background: #00ffcc;
-        }
-        .launch-card h2 {
-            font-size: 1.9rem;
-            color: #ffffff;
-            margin-bottom: 12px;
-            font-weight: 600;
-        }
-        .launch-card p {
-            font-size: 0.9rem;
-            font-weight: bold;
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        .game-p { color: #45f248; }
-        .proxy-p { color: #00ffcc; }
-
-        /* Proxy URL Input Box inside Card */
         .proxy-input-wrapper {
-            margin-top: 15px;
             display: flex;
-            gap: 8px;
-            background: #08090c;
-            padding: 6px;
-            border-radius: 30px;
-            border: 1px solid #313d4f;
+            gap: 12px;
+            background: #090a0f;
+            padding: 8px 8px 8px 20px;
+            border-radius: 50px;
+            border: 2px solid #334155;
+            transition: border-color 0.3s;
+        }
+        .proxy-input-wrapper:focus-within {
+            border-color: #00ffcc;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
         }
         .proxy-input-wrapper input {
             flex: 1;
@@ -111,24 +78,62 @@
             border: none;
             outline: none;
             color: #ffffff;
-            padding: 8px 15px;
-            font-size: 0.9rem;
+            font-size: 1.1rem;
         }
         .proxy-input-wrapper button {
             background: #00ffcc;
-            color: #08090c;
+            color: #050508;
             border: none;
             font-weight: bold;
-            padding: 8px 20px;
-            border-radius: 20px;
+            padding: 12px 30px;
+            border-radius: 50px;
             cursor: pointer;
-            transition: opacity 0.2s;
+            font-size: 1rem;
+            transition: transform 0.2s, background-color 0.2s;
         }
         .proxy-input-wrapper button:hover {
-            opacity: 0.9;
+            background: #33ffdd;
+            transform: scale(1.02);
         }
 
-        /* Fullscreen Matrix Window Space */
+        /* Arcade Grid Area */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            width: 100%;
+            max-width: 1000px;
+            padding: 20px;
+        }
+        .launch-card {
+            background: #0f111a;
+            border: 2px solid #1e293b;
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        .launch-card:hover {
+            transform: translateY(-8px);
+            border-color: #38bdf8;
+            box-shadow: 0 15px 30px rgba(56, 189, 248, 0.15);
+        }
+        .launch-card h3 {
+            font-size: 1.6rem;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+        .launch-card p {
+            color: #38bdf8;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        /* Fullscreen Viewport Window */
         #viewer {
             display: none;
             position: fixed;
@@ -141,7 +146,7 @@
             flex-direction: column;
         }
         .nav-bar {
-            background: #11141a;
+            background: #0f111a;
             padding: 15px 30px;
             display: flex;
             justify-content: space-between;
@@ -149,25 +154,23 @@
             border-bottom: 2px solid #00ffcc;
         }
         .nav-bar h2 {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             color: #00ffcc;
             font-weight: 500;
         }
         .back-btn {
-            background: #ff3b30;
+            background: #ef4444;
             color: white;
             border: none;
-            padding: 10px 22px;
-            border-radius: 30px;
+            padding: 10px 24px;
+            border-radius: 50px;
             cursor: pointer;
             font-weight: bold;
             font-size: 0.95rem;
-            transition: all 0.2s;
-            box-shadow: 0 4px 10px rgba(255, 59, 48, 0.3);
+            transition: background 0.2s;
         }
         .back-btn:hover {
-            background: #ff453a;
-            transform: scale(1.05);
+            background: #dc2626;
         }
         iframe {
             width: 100%;
@@ -181,52 +184,47 @@
 
     <header>
         <h1>RANDOMS UNBLOCKED</h1>
-        <p>Advanced Web Sandbox & Arcade Portal</p>
+        <p>Secure Portal Network & Game Engine</p>
     </header>
 
-    <div class="grid">
-        
-        <!-- NEW FUNCTION: Web Sandbox Card -->
-        <div class="launch-card proxy-card" onclick="event.stopPropagation();">
-            <h2>Stealth Web Browser</h2>
-            <p class="proxy-p">✦ Bypass Sandbox ✦</p>
-            <div class="proxy-input-wrapper">
-                <input type="text" id="proxy-url" placeholder="Enter URL (e.g., google.com)" onkeydown="if(event.key === 'Enter') launchProxy()">
-                <button onclick="launchProxy()">Go</button>
-            </div>
+    <!-- NEW DESIGN: Central Proxy Search Engine Bar -->
+    <div class="search-section">
+        <h2>Stealth Proxy Browser</h2>
+        <div class="proxy-input-wrapper">
+            <input type="text" id="proxy-url" placeholder="Search the web or enter a URL..." onkeydown="if(event.key === 'Enter') launchProxy()">
+            <button onclick="launchProxy()">Browse</button>
         </div>
-
-        <!-- Arcade Game 1 -->
-        <div class="launch-card" onclick="playGame('https://github.io', 'Main Test Environment')">
-            <h2>Main Test</h2>
-            <p class="game-p">✦ Launch Game ✦</p>
-        </div>
-
-        <!-- Arcade Game 2 -->
-        <div class="launch-card" onclick="playGame('https://wasm.rip', 'Birthday Bash')">
-            <h2>Birthday Bash</h2>
-            <p class="game-p">✦ Launch Game ✦</p>
-        </div>
-
-        <!-- Arcade Game 3 -->
-        <div class="launch-card" onclick="playGame('https://wasm.rip', 'Brotato')">
-            <h2>Brotato</h2>
-            <p class="game-p">✦ Launch Game ✦</p>
-        </div>
-
     </div>
 
-    <!-- Hidden Viewer Window Frame -->
+    <!-- Game Selection Zone -->
+    <div class="grid">
+        <div class="launch-card" onclick="playGame('https://github.io', 'Main Test Environment')">
+            <h3>Main Test</h3>
+            <p>✦ Boot System ✦</p>
+        </div>
+
+        <div class="launch-card" onclick="playGame('https://wasm.rip', 'Birthday Bash')">
+            <h3>Birthday Bash</h3>
+            <p>✦ Boot System ✦</p>
+        </div>
+
+        <div class="launch-card" onclick="playGame('https://wasm.rip', 'Brotato')">
+            <h3>Brotato</h3>
+            <p>✦ Boot System ✦</p>
+        </div>
+    </div>
+
+    <!-- Hidden Viewport Player Frame -->
     <div id="viewer">
         <div class="nav-bar">
-            <h2 id="current-game-title">RANDOMS Sandbox Terminal</h2>
-            <button class="back-btn" onclick="closeGame()">Close Session</button>
+            <h2 id="current-game-title">Proxy Terminal Loaded</h2>
+            <button class="back-btn" onclick="closeGame()">Exit Session</button>
         </div>
         <iframe id="game-frame" src=""></iframe>
     </div>
 
     <script>
-        // Main function to run the full-screen viewports
+        // Main view engine launcher
         function playGame(url, title) {
             const viewer = document.getElementById('viewer');
             const frame = document.getElementById('game-frame');
@@ -237,18 +235,31 @@
             viewer.style.display = 'flex';
         }
 
-        // Dedicated Browser Handler
+        // Smart Proxy Search Router
         function launchProxy() {
-            let inputUrl = document.getElementById('proxy-url').value.trim();
-            if (!inputUrl) return;
+            let query = document.getElementById('proxy-url').value.trim();
+            if (!query) return;
 
-            // Automatically patch user string into an explicit web address format
-            if (!inputUrl.startsWith('http://') && !inputUrl.startsWith('https://')) {
-                inputUrl = 'https://' + inputUrl;
+            let targetUrl = "";
+
+            // Check if user typed a regular domain name like google.com or https://site.com
+            const isUrl = query.includes('.') && !query.includes(' ');
+
+            if (isUrl) {
+                // If it's a direct website link, fix the prefix formatting
+                if (!query.startsWith('http://') && !query.startsWith('https://')) {
+                    targetUrl = 'https://' + query;
+                } else {
+                    targetUrl = query;
+                }
+            } else {
+                // If they typed text keywords instead, send it straight to an embedded search engine page!
+                // DuckDuckGo is used here because it handles iframe nesting well.
+                targetUrl = 'https://duckduckgo.com' + encodeURIComponent(query);
             }
 
-            // Launches your target destination using a cross-origin web framing layer
-            playGame(inputUrl, "Browsing: " + inputUrl);
+            // Launch the resulting string inside your viewer panel
+            playGame(targetUrl, "Proxy Frame: " + query);
         }
 
         function closeGame() {
