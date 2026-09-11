@@ -12,64 +12,123 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         body {
-            background-color: #0b0c10;
+            background-color: #08090c;
             color: #ffffff;
             padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            overflow-x: hidden;
         }
         header {
             text-align: center;
-            margin-top: 20px;
-            margin-bottom: 40px;
+            margin-top: 30px;
+            margin-bottom: 50px;
+            position: relative;
         }
         h1 {
-            color: #66fcf1;
-            font-size: 3rem;
-            text-shadow: 0 0 15px rgba(102,252,241,0.4);
-            letter-spacing: 2px;
+            color: #00ffcc;
+            font-size: 3.5rem;
+            text-shadow: 0 0 20px rgba(0, 255, 204, 0.6);
+            letter-spacing: 3px;
+            text-transform: uppercase;
         }
         p {
-            color: #c5c6c7;
-            margin-top: 8px;
+            color: #8f94a0;
+            margin-top: 10px;
             font-size: 1.1rem;
+            letter-spacing: 1px;
         }
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
+            gap: 30px;
             width: 100%;
-            max-width: 1000px;
+            max-width: 1100px;
             padding: 20px;
         }
         .launch-card {
-            background: #1f2833;
-            border: 3px solid #45f248;
-            border-radius: 16px;
-            padding: 30px 20px;
+            background: linear-gradient(145deg, #11141a, #1a1f29);
+            border: 2px solid #1f2633;
+            border-radius: 20px;
+            padding: 35px 25px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        /* Neon Glow Accents */
+        .launch-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: #45f248;
+            transition: background 0.3s;
+        }
+        .launch-card.proxy-card::before {
+            background: #00ffcc;
         }
         .launch-card:hover {
-            transform: translateY(-8px);
-            border-color: #66fcf1;
-            box-shadow: 0 10px 25px rgba(102,252,241,0.3);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 255, 204, 0.2);
+        }
+        .launch-card:hover::before {
+            background: #00ffcc;
         }
         .launch-card h2 {
-            font-size: 1.8rem;
+            font-size: 1.9rem;
             color: #ffffff;
             margin-bottom: 12px;
+            font-weight: 600;
         }
         .launch-card p {
-            color: #66fcf1;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: bold;
+            text-transform: uppercase;
         }
-        /* Fullscreen Game Space Overlay */
+        .game-p { color: #45f248; }
+        .proxy-p { color: #00ffcc; }
+
+        /* Proxy URL Input Box inside Card */
+        .proxy-input-wrapper {
+            margin-top: 15px;
+            display: flex;
+            gap: 8px;
+            background: #08090c;
+            padding: 6px;
+            border-radius: 30px;
+            border: 1px solid #313d4f;
+        }
+        .proxy-input-wrapper input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #ffffff;
+            padding: 8px 15px;
+            font-size: 0.9rem;
+        }
+        .proxy-input-wrapper button {
+            background: #00ffcc;
+            color: #08090c;
+            border: none;
+            font-weight: bold;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .proxy-input-wrapper button:hover {
+            opacity: 0.9;
+        }
+
+        /* Fullscreen Matrix Window Space */
         #viewer {
             display: none;
             position: fixed;
@@ -82,79 +141,92 @@
             flex-direction: column;
         }
         .nav-bar {
-            background: #1f2833;
-            padding: 15px 25px;
+            background: #11141a;
+            padding: 15px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid #45f248;
+            border-bottom: 2px solid #00ffcc;
         }
         .nav-bar h2 {
-            font-size: 1.5rem;
-            color: #66fcf1;
+            font-size: 1.4rem;
+            color: #00ffcc;
+            font-weight: 500;
         }
         .back-btn {
-            background: #ff4d4d;
+            background: #ff3b30;
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 10px 22px;
+            border-radius: 30px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 1rem;
-            transition: background 0.2s;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            box-shadow: 0 4px 10px rgba(255, 59, 48, 0.3);
         }
         .back-btn:hover {
-            background: #ff1a1a;
+            background: #ff453a;
+            transform: scale(1.05);
         }
         iframe {
             width: 100%;
             flex-grow: 1;
             border: none;
-            background: #000000;
+            background: #ffffff;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>RANDOMS Unblocked Games</h1>
-        <p>Select a portal to load your full-screen game session.</p>
+        <h1>RANDOMS UNBLOCKED</h1>
+        <p>Advanced Web Sandbox & Arcade Portal</p>
     </header>
 
-    <!-- Grid Menu for All Your Custom Games -->
     <div class="grid">
         
-        <!-- Game 1: Original Test Game -->
+        <!-- NEW FUNCTION: Web Sandbox Card -->
+        <div class="launch-card proxy-card" onclick="event.stopPropagation();">
+            <h2>Stealth Web Browser</h2>
+            <p class="proxy-p">✦ Bypass Sandbox ✦</p>
+            <div class="proxy-input-wrapper">
+                <input type="text" id="proxy-url" placeholder="Enter URL (e.g., google.com)" onkeydown="if(event.key === 'Enter') launchProxy()">
+                <button onclick="launchProxy()">Go</button>
+            </div>
+        </div>
+
+        <!-- Arcade Game 1 -->
         <div class="launch-card" onclick="playGame('https://github.io', 'Main Test Environment')">
             <h2>Main Test</h2>
-            <p>✦ LAUNCH GAME ✦</p>
+            <p class="game-p">✦ Launch Game ✦</p>
         </div>
 
-        <!-- Game 2: Birthday Bash -->
-        <div class="launch-card" onclick="playGame('https://wasm.rip/files/birthdaybash/index.html', 'Birthday Bash')">
+        <!-- Arcade Game 2 -->
+        <div class="launch-card" onclick="playGame('https://wasm.rip', 'Birthday Bash')">
             <h2>Birthday Bash</h2>
-            <p>✦ LAUNCH GAME ✦</p>
+            <p class="game-p">✦ Launch Game ✦</p>
         </div>
 
-        <!-- Game 3: Brotato -->
-        <div class="launch-card" onclick="playGame('https://wasm.rip/files/bpac/index.html', 'Brotato')">
+        <!-- Arcade Game 3 -->
+        <div class="launch-card" onclick="playGame('https://wasm.rip', 'Brotato')">
             <h2>Brotato</h2>
-            <p>✦ LAUNCH GAME ✦</p>
+            <p class="game-p">✦ Launch Game ✦</p>
         </div>
 
     </div>
 
-    <!-- Full-screen Embedded iframe Window -->
+    <!-- Hidden Viewer Window Frame -->
     <div id="viewer">
         <div class="nav-bar">
-            <h2 id="current-game-title">RANDOMS Arcade Space</h2>
-            <button class="back-btn" onclick="closeGame()">Close Hub</button>
+            <h2 id="current-game-title">RANDOMS Sandbox Terminal</h2>
+            <button class="back-btn" onclick="closeGame()">Close Session</button>
         </div>
         <iframe id="game-frame" src=""></iframe>
     </div>
 
     <script>
+        // Main function to run the full-screen viewports
         function playGame(url, title) {
             const viewer = document.getElementById('viewer');
             const frame = document.getElementById('game-frame');
@@ -163,6 +235,20 @@
             titleElement.innerText = title;
             frame.src = url;
             viewer.style.display = 'flex';
+        }
+
+        // Dedicated Browser Handler
+        function launchProxy() {
+            let inputUrl = document.getElementById('proxy-url').value.trim();
+            if (!inputUrl) return;
+
+            // Automatically patch user string into an explicit web address format
+            if (!inputUrl.startsWith('http://') && !inputUrl.startsWith('https://')) {
+                inputUrl = 'https://' + inputUrl;
+            }
+
+            // Launches your target destination using a cross-origin web framing layer
+            playGame(inputUrl, "Browsing: " + inputUrl);
         }
 
         function closeGame() {
