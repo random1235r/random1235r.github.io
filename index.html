@@ -36,16 +36,19 @@
             margin-top: 8px;
             font-size: 1.1rem;
         }
-        .container {
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
             width: 100%;
-            max-width: 500px;
-            padding: 0 20px;
+            max-width: 1000px;
+            padding: 20px;
         }
         .launch-card {
             background: #1f2833;
             border: 3px solid #45f248;
             border-radius: 16px;
-            padding: 40px 20px;
+            padding: 30px 20px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -57,13 +60,13 @@
             box-shadow: 0 10px 25px rgba(102,252,241,0.3);
         }
         .launch-card h2 {
-            font-size: 2rem;
+            font-size: 1.8rem;
             color: #ffffff;
             margin-bottom: 12px;
         }
         .launch-card p {
             color: #66fcf1;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: bold;
         }
         /* Fullscreen Game Space Overlay */
@@ -116,30 +119,48 @@
 
     <header>
         <h1>RANDOMS Unblocked Games</h1>
-        <p>Your clean, custom full-screen arcade platform.</p>
+        <p>Select a portal to load your full-screen game session.</p>
     </header>
 
-    <div class="container">
-        <!-- Main Game Panel Redirecting to your Target Link -->
-        <div class="launch-card" onclick="playGame('https://mollomm1.github.io/test/')">
-            <h2>Launch Main Game</h2>
-            <p>✦ CLICK TO PLAY FULLSCREEN ✦</p>
+    <!-- Grid Menu for All Your Custom Games -->
+    <div class="grid">
+        
+        <!-- Game 1: Original Test Game -->
+        <div class="launch-card" onclick="playGame('https://github.io', 'Main Test Environment')">
+            <h2>Main Test</h2>
+            <p>✦ LAUNCH GAME ✦</p>
         </div>
+
+        <!-- Game 2: Birthday Bash -->
+        <div class="launch-card" onclick="playGame('https://wasm.rip/files/birthdaybash/index.html', 'Birthday Bash')">
+            <h2>Birthday Bash</h2>
+            <p>✦ LAUNCH GAME ✦</p>
+        </div>
+
+        <!-- Game 3: Brotato -->
+        <div class="launch-card" onclick="playGame('https://wasm.rip/files/bpac/index.html', 'Brotato')">
+            <h2>Brotato</h2>
+            <p>✦ LAUNCH GAME ✦</p>
+        </div>
+
     </div>
 
     <!-- Full-screen Embedded iframe Window -->
     <div id="viewer">
         <div class="nav-bar">
-            <h2>RANDOMS Arcade Space</h2>
+            <h2 id="current-game-title">RANDOMS Arcade Space</h2>
             <button class="back-btn" onclick="closeGame()">Close Hub</button>
         </div>
         <iframe id="game-frame" src=""></iframe>
     </div>
 
     <script>
-        function playGame(url) {
+        function playGame(url, title) {
             const viewer = document.getElementById('viewer');
             const frame = document.getElementById('game-frame');
+            const titleElement = document.getElementById('current-game-title');
+            
+            titleElement.innerText = title;
             frame.src = url;
             viewer.style.display = 'flex';
         }
